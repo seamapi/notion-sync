@@ -15,10 +15,7 @@
     },
     {
       "files": ["*.ts", "*.tsx"],
-      "extends": [
-        "standard-with-typescript",
-        "prettier"
-      ],
+      "extends": ["standard-with-typescript", "prettier"],
       "plugins": ["simple-import-sort"],
       "parserOptions": {
         "project": "./tsconfig.json"
