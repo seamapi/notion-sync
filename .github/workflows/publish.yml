@@ -51,4 +51,4 @@ jobs:
       artifact_name: ${{ needs.build.outputs.artifact_name }}
       registry_url: https://registry.npmjs.org
     secrets:
-      registry_token: ${{ secrets.NPM_TOKEN }}
+      registry_token: ${{ secrets.SEAMAPI_NPM_TOKEN }}
