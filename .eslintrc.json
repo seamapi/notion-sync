@@ -1,0 +1,61 @@
+{
+  "root": true,
+  "ignorePatterns": [],
+  "rules": {
+    "no-console": "error"
+  },
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": "latest"
+  },
+  "overrides": [
+    {
+      "files": [".js", ".mjs", ".cjs"],
+      "extends": ["standard", "prettier"]
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "extends": [
+        "standard-with-typescript",
+        "prettier"
+      ],
+      "plugins": ["simple-import-sort"],
+      "parserOptions": {
+        "project": "./tsconfig.json"
+      },
+      "overrides": [
+        {
+          "files": ["**/*.test.tsx?", "test/jest/setup-*.tsx?"],
+          "env": { "jest": true }
+        }
+      ],
+      "rules": {
+        "@typescript-eslint/no-import-type-side-effects": "error",
+        "@typescript-eslint/consistent-type-imports": [
+          "error",
+          {
+            "fixStyle": "inline-type-imports"
+          }
+        ],
+        "@typescript-eslint/no-unused-vars": "warn",
+        "import/extensions": ["error", "ignorePackages"],
+        "import/no-duplicates": ["error", { "prefer-inline": true }],
+        "simple-import-sort/imports": [
+          "error",
+          {
+            "groups": [
+              ["^\\u0000"],
+              ["^node:"],
+              ["^@?\\w"],
+              ["index.js"],
+              ["^fixtures/", "^lib/"],
+              ["^"],
+              ["^\\."]
+            ]
+          }
+        ],
+        "simple-import-sort/exports": "error"
+      }
+    }
+  ]
+}
