@@ -18,8 +18,8 @@
   "license": "ISC",
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "import": "./index.js",
+      "types": "./index.d.ts"
     }
   },
   "author": {
