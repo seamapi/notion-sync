@@ -1,31 +1,54 @@
 import type { BlockObjectRequest } from '@notionhq/client/build/src/api-endpoints'
 import { markdownToBlocks } from '@tryfabric/martian'
 
-import { getNotionClient } from './get-notion-client.js'
+import { deleteBlock } from '../notion/delete-block.js'
+import { getNotionClient } from '../notion/get-notion-client.js'
 
 export class FailedAddingBlocksException extends Error {
-  parent_page_id: string
-  constructor(parent_page_id: string, error: Error) {
+  page_id: string
+  constructor(page_id: string, error: Error) {
     super('Failed to add blocks.')
     this.stack = error.stack
-    this.parent_page_id = parent_page_id
+    this.page_id = page_id
   }
 }
 
 interface CreatePageParams {
   title: string
   content: string
-  parent_page_id: string
+  page_id: string
+  attempt?: number
 }
 
-export async function createPage(params: CreatePageParams): Promise<void> {
-  const { title, parent_page_id, content } = params
+export default async function createPage(
+  params: CreatePageParams
+): Promise<void> {
+  const { attempt = 1 } = params
+
+  try {
+    await tryCreatePage(params)
+  } catch (error) {
+    // If a page was created, deleted it to try again.
+    if (error instanceof FailedAddingBlocksException) {
+      await deleteBlock(error.page_id)
+    }
+
+    if (attempt < 3) {
+      await createPage({ ...params, attempt: attempt + 1 })
+    } else {
+      throw error
+    }
+  }
+}
+
+async function tryCreatePage(params: CreatePageParams): Promise<void> {
+  const { title, page_id, content } = params
 
   const notion = getNotionClient()
 
   const page = await notion.pages.create({
     parent: {
-      page_id: parent_page_id,
+      page_id,
     },
     properties: {
       title: {
