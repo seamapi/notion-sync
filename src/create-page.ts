@@ -1,8 +1,8 @@
 import type { BlockObjectRequest } from '@notionhq/client/build/src/api-endpoints'
 import { markdownToBlocks } from '@tryfabric/martian'
 
-import { deleteBlock } from '../notion/delete-block.js'
-import { getNotionClient } from '../notion/get-notion-client.js'
+import { deleteBlock } from './delete-block.js'
+import { getNotionClient } from './get-notion-client.js'
 
 export class FailedAddingBlocksException extends Error {
   page_id: string
