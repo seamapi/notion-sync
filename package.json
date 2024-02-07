@@ -37,5 +37,9 @@
     "jest-watch-typeahead": "^2.2.2",
     "prettier": "^3.2.5",
     "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@notionhq/client": "^2.2.14",
+    "@tryfabric/martian": "^1.2.4"
   }
 }
