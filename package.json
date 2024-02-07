@@ -1,6 +1,6 @@
 {
   "name": "@seamapi/notion-sync",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Sync file contents to Notion",
   "main": "index.js",
   "scripts": {
